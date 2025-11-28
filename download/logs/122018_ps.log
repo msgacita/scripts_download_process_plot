@@ -1,0 +1,14 @@
+Requesting divergence for 2018-12
+Recovering from HTTP error [502 Bad Gateway], attempt 1 of 500
+Retrying in 120 seconds
+Recovering from connection error [('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))], attempt 2 of 500
+Retrying in 120 seconds
+Recovering from connection error [('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))], attempt 3 of 500
+Retrying in 120 seconds
+Recovering from connection error [('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))], attempt 4 of 500
+Retrying in 120 seconds
+Recovering from connection error [('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))], attempt 5 of 500
+Retrying in 120 seconds
+2025-11-18 17:15:56,934 INFO Request ID is 3a3d1dd4-3faa-4cc7-b78c-a34758553fc1
+Recovering from connection error [('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))], attempt 1 of 500
+Retrying in 120 seconds
