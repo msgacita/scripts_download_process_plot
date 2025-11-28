@@ -2,8 +2,8 @@ import cdsapi
 import calendar
 
 # Input parameters
-month = "{{MONTH}}"
-year = "{{YEAR}}"
+month = "12"
+year = "2018"
 
 
 # Calculate number of days in the month
@@ -13,9 +13,9 @@ days = [f"{day:02d}" for day in range(1, num_days + 1)]
 dataset = "reanalysis-era5-pressure-levels"
 request = {
     "product_type": ["reanalysis"],
-    "variable": ["{{VAR}}"], # This line will be modified
-    "year": ["{{YEAR}}"],
-    "month": ["{{MONTH}}"],
+    "variable": ["divergence"], # This line will be modified
+    "year": ["2018"],
+    "month": ["12"],
     "day": days,
     "time": [
         "00:00", "03:00", "06:00", 
@@ -30,7 +30,7 @@ request = {
         "500",  "700", "775", 
         "850", "925", "1000"
     ],
-    "data_format": "netcdf",
+    "data_format": "grib",
     "download_format": "unarchived"
 }
 
@@ -38,5 +38,5 @@ client = cdsapi.Client()
 #client.retrieve(dataset, request).download()
 
 # Download the data directly to the target file
-target_file = f"/pesq/dados/monan/users/madeleine.gacita/global_data/era5/pressure_levels/{{YEAR}}/{{MONTH}}/{{VAR}}.grib"
+target_file = f"/pesq/dados/monan/users/madeleine.gacita/global_data/era5/pressure_levels/2018/12/divergence.grib"
 client.retrieve(dataset, request, target_file)

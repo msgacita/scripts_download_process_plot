@@ -79,7 +79,7 @@ variables=(
 #     "fraction_of_cloud_cover"
 # )
 
-template="request template_era5_single_levels.py"
+template="request_template_era5_single_levels.py"
 # Path to the Python script
 script="request_code_single_levels.py"
 

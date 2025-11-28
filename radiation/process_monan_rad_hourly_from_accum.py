@@ -218,7 +218,7 @@ def main():
         units="W/m^{-2}",
     )
 
-    out_path = Path(args.out_dir) / f"{month_abbr}{year}_hourly_{args.var.removeprefix('ac')}.nc"
+    out_path = Path(args.out_dir) / f"{month_abbr}{args.year}_hourly_{args.var.removeprefix('ac')}.nc"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     ds_out.to_netcdf(out_path, engine="h5netcdf", mode="w")
     print(f"[OK] Wrote {out_path}")
@@ -255,7 +255,7 @@ def main():
     
     ds_mhourly = xr.Dataset(
         data_vars={
-            f"{var_name}_MHourly": monthly_hourly_mean.astype("float32"),
+            f"{var_name}": monthly_hourly_mean.astype("float32"),
             "local_hour": (("hour", "nCells"), local_hour.astype("float32"))
         },
         coords={
@@ -269,7 +269,7 @@ def main():
         units="hours",
         description="Local time hour (0-24) calculated from UTC hour + longitude/15"
     )
-    ds_mhourly[f"{var_name}_MHourly"].attrs.update(
+    ds_mhourly[f"{var_name}"].attrs.update(
         long_name=f"Monthly Hourly Mean {var_name}",
         units="W m^{-2}",
         description=f"Diurnal cycle: mean for each hour (0-23 UTC) averaged over {args.year}-{args.month}"
