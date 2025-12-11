@@ -38,5 +38,5 @@ client = cdsapi.Client()
 #client.retrieve(dataset, request).download()
 
 # Download the data directly to the target file
-target_file = f"/pesq/dados/monan/users/madeleine.gacita/global_data/era5/pressure_levels/{{YEAR}}/{{MONTH}}/{{VAR}}.grib"
+target_file = f"/pesq/dados/monan/users/madeleine.gacita/global_data/era5/pressure_levels/{{YEAR}}/{{MONTH}}/{{VAR}}.nc"
 client.retrieve(dataset, request, target_file)

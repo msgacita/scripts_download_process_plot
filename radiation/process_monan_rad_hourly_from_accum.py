@@ -1,33 +1,32 @@
 #!/usr/bin/env python3
 """
-Quick check + hourly amounts from accumulated precipitation (MONAN)
+Quick check + hourly amounts from accumulated variable (MONAN)
 
 What this script does (phase 1):
-1) Scans your DIAG files, keeps only the existing hours in December 2018.
-2) Loads the accumulated precipitation variable `rainnc(Time, nCells)` lazily.
-3) Verifies whether `rainnc` is (near) monotonically non-decreasing over time
+1) Scans your DIAG files, keeps only the existing hours in <month> <year..
+2) Loads the accumulated variable (Time, nCells)` lazily.
+3) Verifies whether variable is (near) monotonically non-decreasing over time
    per grid cell (allowing tiny numerical jitter).
 4) Computes hourly precipitation amounts by differencing the accumulated field.
    Negative diffs (beyond tolerance) are treated as invalid and set to NaN.
 5) Saves:
-   - hourly precipitation (mm per hour) as `rain_hourly`
-   - a per-timestep fraction of cells with negative diffs as `neg_frac`
-   - lon/lat (degrees) for each cell
-   to a single NetCDF.
+   - hourly variable amounts as `<var>_hourly` and lon/lat (degrees) for each cell
+   - monthly hourly data and lon/lat (degrees) for each cell
+   to single NetCDFs.
 
 USAGE EXAMPLE
 -------------
-python getting_MONAN_hourly_precip.py \
+python process_monan_rad_hourly_from_accum.py \
   --diag-root /pesq/dados/monan/users/lianet.hernandez/global_clm_2018-2019 \
   --init 2018111500 \
-  --out-nc /pesq/dados/monan/users/lianet.hernandez/global_clm_2018-2019/derived_data/dec2018_hourly_rain_from_accum.nc
+  --out-dir /pesq/dados/monan/users/lianet.hernandez/global_clm_2018-2019/derived_data/
 
 NOTES
 -----
 - Assumes one file per output time, 1-hourly, with filenames like:
   MONAN_DIAG_G_MOD_GFS_<INIT>_<YYYYMMDDHH>.00.00.x655362L55.nc
 - Works on unstructured grid (dimension: nCells).
-- `rainnc` is assumed to be accumulated total precipitation in mm since model start.
+- `var` is assumed to be accumulated within hour
 - Tolerance for numerical jitter can be adjusted via --neg-eps.
 
 After you verify the hourly product looks good, we can run the diurnal

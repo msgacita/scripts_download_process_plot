@@ -2,15 +2,15 @@ import cdsapi
 import calendar
 
 # Input parameters
-month = "12"
+month = "11"
 year = "2018"
 
 dataset = "reanalysis-era5-single-levels-monthly-means"
 request = {
     "product_type": ["monthly_averaged_reanalysis_by_hour_of_day"],
-    "variable": ["surface_thermal_radiation_downwards"],
+    "variable": ["2m_dewpoint_temperature"],
     "year": ["2018"],
-    "month": ["12"],
+    "month": ["11"],
     "time": [
         "00:00", "01:00", "02:00",
         "03:00", "04:00", "05:00",
@@ -26,5 +26,5 @@ request = {
 }
 
 client = cdsapi.Client()
-target_file = f"/pesq/dados/monan/users/madeleine.gacita/global_data/era5/single_levels/2018/12/surface_thermal_radiation_downwards_MHour.nc"
+target_file = f"/pesq/dados/monan/users/madeleine.gacita/global_data/era5/single_levels/2018/11/2m_dewpoint_temperature_MHour.nc"
 client.retrieve(dataset, request, target_file)

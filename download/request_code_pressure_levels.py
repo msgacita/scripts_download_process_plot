@@ -2,7 +2,7 @@ import cdsapi
 import calendar
 
 # Input parameters
-month = "12"
+month = "11"
 year = "2018"
 
 
@@ -15,7 +15,7 @@ request = {
     "product_type": ["reanalysis"],
     "variable": ["divergence"], # This line will be modified
     "year": ["2018"],
-    "month": ["12"],
+    "month": ["11"],
     "day": days,
     "time": [
         "00:00", "03:00", "06:00", 
@@ -30,7 +30,7 @@ request = {
         "500",  "700", "775", 
         "850", "925", "1000"
     ],
-    "data_format": "grib",
+    "data_format": "netcdf",
     "download_format": "unarchived"
 }
 
@@ -38,5 +38,5 @@ client = cdsapi.Client()
 #client.retrieve(dataset, request).download()
 
 # Download the data directly to the target file
-target_file = f"/pesq/dados/monan/users/madeleine.gacita/global_data/era5/pressure_levels/2018/12/divergence.grib"
+target_file = f"/pesq/dados/monan/users/madeleine.gacita/global_data/era5/pressure_levels/2018/11/divergence.nc"
 client.retrieve(dataset, request, target_file)
