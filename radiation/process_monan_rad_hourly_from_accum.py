@@ -50,7 +50,7 @@ def parse_args():
     p.add_argument("--year", type=int, default=2018, help="Year of interest (default: 2018)")
     p.add_argument("--month", type=int, default=12, help="Month of interest (default: 12)")
     p.add_argument("--init", required=True, help="Initialization tag, e.g., 2018111500")
-    p.add_argument("--var", default="swdnb",
+    p.add_argument("--var", default="acswdnb",
                    help="Accumulated variable name (default: acswdnb). Starts with ac.")
     p.add_argument("--out-dir", required=True, help="Output directory for NetCDF with hourly data")
     p.add_argument("--chunks", default="auto",
