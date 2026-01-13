@@ -120,22 +120,36 @@ def load_accum(paths, var, chunks, lat_name="latCell", lon_name="lonCell"):
             if var not in ds_one:
                 raise KeyError(f"Variable '{var}' not found in {p}")
 
-            # Read lat/lon once (from the first file we open)
             if (lat is None) or (lon is None):
                 if (lat_name not in ds_one) or (lon_name not in ds_one):
-                    raise KeyError(f"Expected '{lat_name}' and '{lon_name}' in {p}")
+                    print(f"Expected '{lat_name}' and '{lon_name}' in {p}, opening CTRL file for coords")
+                    ds_for_coords = xr.open_dataset("/pesq/dados/monan/users/lianet.hernandez/global_clm_2018-2019/CTRL/MONAN_DIAG_G_MOD_GFS_2018111500_2018111500.00.00.x655362L55.nc",
+                        engine="netcdf4",
+                        chunks=chunks_dict,
+                        decode_times=True,
+                    )
+                    lat_rad = ds_for_coords[lat_name].astype("float64").load()
+                    lon_rad = ds_for_coords[lon_name].astype("float64").load()
 
-                lat_rad = ds_one[lat_name].astype("float64").load()
-                lon_rad = ds_one[lon_name].astype("float64").load()
+                    # Convert radians -> degrees; wrap lon to [-180, 180)
+                    lat_deg = np.degrees(lat_rad)
+                    lon_deg = (np.degrees(lon_rad) + 180.0) % 360.0 - 180.0
 
-                # Convert radians -> degrees; wrap lon to [-180, 180)
-                lat_deg = np.degrees(lat_rad)
-                lon_deg = (np.degrees(lon_rad) + 180.0) % 360.0 - 180.0
+                    # Keep original 1D dim (usually 'nCells')
+                    lat = xr.DataArray(lat_deg.values, dims=lat_rad.dims, coords=lat_rad.coords, name="lat")
+                    lon = xr.DataArray(lon_deg.values, dims=lon_rad.dims, coords=lon_rad.coords, name="lon")
+                    ds_for_coords.close()
+                else:
+                    lat_rad = ds_one[lat_name].astype("float64").load()
+                    lon_rad = ds_one[lon_name].astype("float64").load()
 
-                # Keep original 1D dim (usually 'nCells')
-                lat = xr.DataArray(lat_deg.values, dims=lat_rad.dims, coords=lat_rad.coords, name="lat")
-                lon = xr.DataArray(lon_deg.values, dims=lon_rad.dims, coords=lon_rad.coords, name="lon")
+                    # Convert radians -> degrees; wrap lon to [-180, 180)
+                    lat_deg = np.degrees(lat_rad)
+                    lon_deg = (np.degrees(lon_rad) + 180.0) % 360.0 - 180.0
 
+                    # Keep original 1D dim (usually 'nCells')
+                    lat = xr.DataArray(lat_deg.values, dims=lat_rad.dims, coords=lat_rad.coords, name="lat")
+                    lon = xr.DataArray(lon_deg.values, dims=lon_rad.dims, coords=lon_rad.coords, name="lon")
             da_one = ds_one[var]
 
             # sanity check: Time present and length 1
